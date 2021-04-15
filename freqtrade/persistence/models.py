@@ -74,7 +74,7 @@ def cleanup_db() -> None:
     Flushes all pending operations to disk.
     :return: None
     """
-    Trade.query.session.commit()
+    Trade.commit()
 
 
 def clean_dry_run_db() -> None:
@@ -86,7 +86,7 @@ def clean_dry_run_db() -> None:
         # Check we are updating only a dry_run order not a prod one
         if 'dry_run' in trade.open_order_id:
             trade.open_order_id = None
-    Trade.query.session.commit()
+    Trade.commit()
 
 
 class Order(_DECL_BASE):
@@ -802,7 +802,7 @@ class Trade(_DECL_BASE, LocalTrade):
             Order.query.session.delete(order)
 
         Trade.query.session.delete(self)
-        Trade.query.session.commit()
+        Trade.commit()
 
     @staticmethod
     def get_trades_proxy(*, pair: str = None, is_open: bool = None,
@@ -833,6 +833,10 @@ class Trade(_DECL_BASE, LocalTrade):
                 open_date=open_date,
                 close_date=close_date
             )
+
+    @staticmethod
+    def commit():
+        Trade.query.session.commit()
 
 
 class PairLock(_DECL_BASE):
