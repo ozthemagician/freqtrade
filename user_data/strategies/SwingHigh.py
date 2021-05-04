@@ -17,24 +17,34 @@ __email__ = "kevin.ossenbrueck@pm.de"
 __status__ = "Live"
 
 # CCI timerperiods and values
-cciBuyTP = 72
-cciBuyVal = -175
-cciSellTP = 66
-cciSellVal = -106
+cciBuyTP = 17
+cciBuyVal = -82
+cciSellTP = 11
+cciSellVal = 140
 
 # RSI timeperiods and values
-rsiBuyTP = 36
-rsiBuyVal = 90
-rsiSellTP = 45
-rsiSellVal = 88
-
+rsiBuyTP = 49
+rsiBuyVal = 78
+rsiSellTP = 39
+rsiSellVal = 28
 
 class SwingHigh(IStrategy):
-    timeframe = '1m'
+    timeframe = '15m'
 
-    stoploss = -0.34338
+    stoploss = -0.331
 
-    minimal_roi = {"0": 0.27058, "15": 0.2, "33": 0.0853, "64": 0.04093, "244": 0}
+    # minimal_roi = {"0": 0.27058, "33": 0.0853, "64": 0.04093, "244": 0}
+    minimal_roi = {
+        "0": 0.283,
+        "92": 0.087,
+        "241": 0.04,
+        "436": 0
+    }
+
+    trailing_stop = True
+    trailing_stop_positive = 0.34
+    trailing_stop_positive_offset = 0.361
+    trailing_only_offset_is_reached = True
 
     def informative_pairs(self):
         return []
